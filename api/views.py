@@ -11,7 +11,7 @@ from .serializers import RegisterSerializer
 def movie_list(request):
     if request.method == 'GET':
         movies = Movie.objects.all()
-        serializer = MovieSerializer(movies, many=True)
+        serializer = MovieSerializer(movies, context={'request':request}, many=True)
         return Response({'data': serializer.data})
 
     elif request.method == 'POST':
@@ -32,7 +32,7 @@ def getMovie(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = MovieSerializer(movie)
+        serializer = MovieSerializer(movie, context={'request':request})
         return Response(serializer.data)
 
     elif request.method == 'PUT':
